@@ -1,0 +1,307 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "Open API .Net 10",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Auth/token": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Genera un token de autenticación.",
+        "responses": {
+          "200": {
+            "description": "Operación exitosa"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/api/Reservas": {
+      "get": {
+        "tags": [
+          "Reservas"
+        ],
+        "summary": "Obtiene la lista de reservas según los parámetros de búsqueda proporcionados.",
+        "parameters": [
+          {
+            "name": "Fecha",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operación exitosa"
+          },
+          "401": {
+            "description": "Operacion no autorizada"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Reservas"
+        ],
+        "summary": "Crea una nueva reserva.",
+        "requestBody": {
+          "description": "Datos de la nueva reserva",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewReservaRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewReservaRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewReservaRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Operación exitosa"
+          },
+          "400": {
+            "description": "Datos de la reserva inválidos"
+          },
+          "401": {
+            "description": "Operacion no autorizada"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Reservas"
+        ],
+        "summary": "Actualiza una reserva existente.",
+        "requestBody": {
+          "description": "Datos de la reserva a actualizar",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateReservaRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateReservaRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateReservaRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Operación exitosa"
+          },
+          "404": {
+            "description": "Reserva no encontrada"
+          },
+          "400": {
+            "description": "Datos de la reserva inválidos"
+          },
+          "401": {
+            "description": "Operacion no autorizada"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/api/Reservas/{id}": {
+      "get": {
+        "tags": [
+          "Reservas"
+        ],
+        "summary": "Obtiene una reserva específica por su ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID de la reserva",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operación exitosa"
+          },
+          "404": {
+            "description": "Reserva no encontrada"
+          },
+          "401": {
+            "description": "Operacion no autorizada"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Reservas"
+        ],
+        "summary": "Elimina una reserva específica por su ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID de la reserva",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operación exitosa"
+          },
+          "404": {
+            "description": "Reserva no encontrada"
+          },
+          "401": {
+            "description": "Operacion no autorizada"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "NewReservaRequest": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaReserva": {
+            "type": "string",
+            "nullable": true
+          },
+          "horaInicio": {
+            "type": "string",
+            "nullable": true
+          },
+          "horaFin": {
+            "type": "string",
+            "nullable": true
+          },
+          "responsable": {
+            "type": "string",
+            "nullable": true
+          },
+          "cantAsistentes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "motivoReunion": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateReservaRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaReserva": {
+            "type": "string",
+            "nullable": true
+          },
+          "horaInicio": {
+            "type": "string",
+            "nullable": true
+          },
+          "horaFin": {
+            "type": "string",
+            "nullable": true
+          },
+          "responsable": {
+            "type": "string",
+            "nullable": true
+          },
+          "cantAsistentes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "motivoReunion": {
+            "type": "string",
+            "nullable": true
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "description": "Ingrese el token JWT en el campo: Bearer {token}",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearer": [ ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth"
+    },
+    {
+      "name": "Reservas"
+    }
+  ]
+}
